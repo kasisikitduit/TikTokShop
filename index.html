@@ -1,0 +1,134 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="二手叉車, AutoCAD 教學, TikTok Shop">
+    <meta name="description" content="探索二手叉車銷售和 AutoCAD 教學">
+    <title>我的 TikTok Shop 商店</title>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+    </script>
+    <style>
+        .image-gallery { display: flex; gap: 10px; margin: 10px 0; }
+        .image-gallery img { max-width: 30%; height: auto; transition: opacity 0.3s ease; }
+        .image-gallery img:hover { opacity: 0.8; cursor: pointer; }
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); justify-content: center; align-items: center; }
+        .modal-content { max-width: 90%; max-height: 90%; }
+        .close { position: absolute; top: 15px; right: 35px; color: white; font-size: 40px; cursor: pointer; }
+        .cta-button { background-color: #0088cc; color: white; padding: 10px 20px; text-decoration: none; }
+        .cta-button:hover { background-color: #006699; }
+        .note { text-align: center; color: #666; font-size: 12px; margin: 10px 0; }
+        .recommendation { text-align: center; margin: 20px 0; color: #333; }
+        .recommendation a { color: #0088cc; text-decoration: none; }
+        .recommendation a:hover { text-decoration: underline; }
+        #contactInfo p { margin: 5px 0; }
+    </style>
+</head>
+
+<body>
+    <h1>歡迎來到我的 TikTok Shop 商店！</h1>
+    <p class="construction">非常抱歉，網頁正在建設中，預計 2025 年 5 月底完成。感謝您的耐心！</p>
+    
+    <div class="product">
+        <h2>二手插車待售 - Toyota 8FGCU25</h2>
+        <div class="image-gallery">
+            <img src="images/product-used-toyota-forklift-8FGCU25-2018-front.jpg" alt="2018 Toyota 二手插車 (正面)" loading="lazy" onclick="openModal('images/product-used-toyota-forklift-2018.jpg')" style="cursor: pointer;">
+            <img src="images/product-used-toyota-forklift-8FGCU25-2018-side.jpg" alt="2018 Toyota 二手插車 (側面)" loading="lazy" onclick="openModal('images/product-used-toyota-forklift-2018-side.jpg')" style="cursor: pointer;">
+            <img src="images/product-used-toyota-forklift-8FGCU25-2018-rear.jpg" alt="2018 Toyota 二手插車 (後面)" loading="lazy" onclick="openModal('images/product-used-toyota-forklift-2018-rear.jpg')" style="cursor: pointer;">
+        </div>
+        <p>年份：2018 | 狀況：良好 | 價格：<span id="price">RM 15,000</span></p>
+        <p class="note">價格和庫存可能隨時更新，請加入 Telegram 群組獲取最新資訊！</p>
+        <a href="https://t.me/+kGgttt3VJH4zZTRl" class="cta-button">加入 Telegram 群組</a>
+    </div>
+
+    <div class="product">
+        <h2>AutoCAD 教學 - 倉庫佈局設計</h2>
+        <img src="images/product-autocad-tutorial-01.jpg" alt="AutoCAD 倉庫佈局教學" loading="lazy" onclick="openModal('images/product-autocad-tutorial-01.jpg')" style="cursor: pointer;">
+        <p>學習如何用 AutoCAD 設計倉庫佈局，適合初學者！更多教程請關注我的 YouTube。</p>
+        <a href="https://www.youtube.com/watch?v=視頻ID" class="cta-button">觀看教程</a>
+    </div>
+
+    <!-- Modal 視窗 -->
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">×</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <!-- 音頻播放器 -->
+    <div id="audioControls" style="text-align: center; margin: 20px 0;">
+        <audio id="backgroundMusic" src="images/background-music-笑看風雲.mp3" loop></audio>
+        <button onclick="playMusic()">播放音樂</button>
+        <button onclick="pauseMusic()">暫停音樂</button>
+    </div>
+
+    <footer>
+        <p>© 2025 我的 TikTok Shop | <a href="https://t.me/+kGgttt3VJH4zZTRl">欲知更多消息請參加我的 Telegram Group</a></p>
+    </footer>
+	
+    <!-- 政府部門與公用事業資訊 -->
+    <div id="contactInfo" style="text-align: center; margin: 20px 0; font-size: 14px;">
+        <h3>相關政府部門與公用事業聯繫方式</h3>
+        <p><strong>政府部門：</strong></p>
+        <p>LHDN (稅務局): <a href="tel:+60389111000">03-8911 1000</a> (本地) / <a href="tel:+60389111000">603-8911 1000</a> (海外), 特別援助: <a href="tel:+1800882747">1800-88-2747</a>, 電子郵件: <a href="mailto:helpdesk@hasil.gov.my">helpdesk@hasil.gov.my</a></p>
+        <p>MCMC (通訊與多媒體委員會): <a href="tel:+1800888030">1-800-888-030</a>, 網站: <a href="https://www.mcmc.gov.my" target="_blank">www.mcmc.gov.my</a></p>
+        <p>997 熱線 (舉報詐骗): <a href="tel:997">997</a></p>
+        <p><strong>公用事業與稅務：</strong></p>
+        <p>TM (電訊): <a href="tel:100">100</a>, 網站: <a href="https://www.tm.com.my" target="_blank">www.tm.com.my</a></p>
+        <p>Maxis: <a href="tel:123">123</a>, 網站: <a href="https://www.maxis.com.my" target="_blank">www.maxis.com.my</a></p>
+        <p>Digi: <a href="tel:+60162211800">016-221 1800</a>, 網站: <a href="https://www.digi.com.my" target="_blank">www.digi.com.my</a></p>
+        <p>SAMB (雪蘭莪州水務): <a href="tel:15300">15300</a>, 網站: <a href="https://www.syabas.com.my" target="_blank">www.syabas.com.my</a></p>
+        <p>TNB (國家電力): 故障申報: <a href="tel:15454">15454</a>, 客戶服務: <a href="tel:+60389253888">03-8925 3888</a>, 網站: <a href="https://www.tnb.com.my" target="_blank">www.tnb.com.my</a></p>
+        <p>IWK (產業用水): <a href="tel:+1800884995">1800-88-4995</a>, 網站: <a href="https://www.iwk.com.my" target="_blank">www.iwk.com.my</a></p>
+        <p>門牌稅: 聯繫當地市政廳 (例如 MBSA: <a href="tel:+60355105711">03-5510 5711</a>)</p>
+        <p>地稅: 聯繫當地地政局 (例如雪蘭莪州土地局: <a href="tel:+60355447000">03-5544 7000</a>)</p>
+        <p class="note">以上資訊僅供參考，請自行確認最新聯繫方式！</p>
+    </div>
+
+    <script>
+        function trackInterest(category) {
+            localStorage.setItem('userInterest', category);
+            recommendContent();
+        }
+
+        function recommendContent() {
+            var interest = localStorage.getItem('userInterest');
+            var recommendationDiv = document.createElement('div');
+            recommendationDiv.className = 'recommendation';
+            if (interest === 'forklift') {
+                recommendationDiv.innerHTML = '<p>你似乎對叉車感興趣！<a href="https://t.me/YourGroupName">加入 Telegram 群組了解更多！</a></p>';
+            } else if (interest === 'autocad') {
+                recommendationDiv.innerHTML = '<p>你喜歡 AutoCAD 教學！<a href="https://www.youtube.com/watch?v=視頻ID">觀看更多教程</a></p>';
+            }
+            document.body.appendChild(recommendationDiv);
+        }
+
+        window.onload = function() {
+            recommendContent();
+        };
+
+        var audio = document.getElementById("backgroundMusic");
+        function playMusic() { audio.play(); }
+        function pauseMusic() { audio.pause(); }
+        function adjustVolume(value) { audio.volume = value; }
+        function openModal(imageSrc) {
+            var modal = document.getElementById("imageModal");
+            var modalImg = document.getElementById("modalImage");
+            modal.style.display = "flex";
+            modalImg.src = imageSrc;
+        }
+        function closeModal() {
+            var modal = document.getElementById("imageModal");
+            modal.style.display = "none";
+        }
+        window.onclick = function(event) {
+            var modal = document.getElementById("imageModal");
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body>
