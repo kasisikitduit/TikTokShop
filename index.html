@@ -1,0 +1,73 @@
+<body>
+    <h1>歡迎來到我的 TikTok Shop 商店！</h1>
+    <p class="construction">非常抱歉，網頁正在建設中，預計 2025 年 5 月底完成。感謝您的耐心！</p>
+    
+    <div class="product">
+        <h2>二手插車待售 - Toyota 8FGCU25</h2>
+        <div class="image-gallery">
+            <img src="images/product-used-toyota-forklift-8FGCU25-2018-front.jpg" alt="2018 Toyota 二手插車 (正面)" loading="lazy" onclick="openModal('images/product-used-toyota-forklift-2018.jpg')" style="cursor: pointer;">
+            <img src="images/product-used-toyota-forklift-8FGCU25-2018-side.jpg" alt="2018 Toyota 二手插車 (側面)" loading="lazy" onclick="openModal('images/product-used-toyota-forklift-2018-side.jpg')" style="cursor: pointer;">
+            <img src="images/product-used-toyota-forklift-8FGCU25-2018-rear.jpg" alt="2018 Toyota 二手插車 (後面)" loading="lazy" onclick="openModal('images/product-used-toyota-forklift-2018-rear.jpg')" style="cursor: pointer;">
+        </div>
+        <p>年份：2018 | 狀況：良好 | 價格：<span id="price">RM 15,000</span></p>
+        <p class="note">價格和庫存可能隨時更新，請加入 Telegram 群組獲取最新資訊！</p>
+        <a href="https://t.me/+kGgttt3VJH4zZTRl" class="cta-button">加入 Telegram 群組</a>
+    </div>
+
+    <div class="product">
+        <h2>AutoCAD 教學 - 倉庫佈局設計</h2>
+        <img src="images/product-autocad-tutorial-01.jpg" alt="AutoCAD 倉庫佈局教學" loading="lazy" onclick="openModal('images/product-autocad-tutorial-01.jpg')" style="cursor: pointer;">
+        <p>學習如何用 AutoCAD 設計倉庫佈局，適合初學者！更多教程請關注我的 YouTube。</p>
+        <a href="https://www.youtube.com/watch?v=視頻ID" class="cta-button">觀看教程</a>
+    </div>
+
+    <!-- Modal 視窗 -->
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">×</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <!-- 音頻播放器 -->
+    <div id="audioControls" style="text-align: center; margin: 20px 0;">
+        <audio id="backgroundMusic" src="images/background-music-笑看風雲.mp3" loop></audio>
+        <button onclick="playMusic()">播放音樂</button>
+        <button onclick="pauseMusic()">暫停音樂</button>
+    </div>
+
+    <footer>
+        <p>© 2025 我的 TikTok Shop | <a href="https://t.me/+kGgttt3VJH4zZTRl">欲知更多消息請參加我的 Telegram Group</a></p>
+    </footer>
+
+    <script>
+        function openModal(imageSrc) {
+            var modal = document.getElementById("imageModal");
+            var modalImg = document.getElementById("modalImage");
+            modal.style.display = "flex";
+            modalImg.src = imageSrc;
+        }
+        function closeModal() {
+            var modal = document.getElementById("imageModal");
+            modal.style.display = "none";
+        }
+        window.onclick = function(event) {
+            var modal = document.getElementById("imageModal");
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // 音樂控制
+        var audio = document.getElementById("backgroundMusic");
+        function playMusic() {
+            audio.play();
+        }
+        function pauseMusic() {
+            audio.pause();
+        }
+    </script>
+</body>
+</html>
+
+
+
+
