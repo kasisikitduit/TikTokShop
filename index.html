@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="我的 TikTok Shop 推廣商店，展示優質產品與創作者內容！">
+    <meta name="keywords" content="TikTok Shop, 產品推薦, affiliate, 創作者, forklift">
+    <title>我的 TikTok Shop 推廣商店</title>
+    <!-- Preload critical resources -->
+    <link rel="preload" href="music/background-music-笑看風雲.mp3" as="audio">
+    <style>
+        :root {
+            --primary-color: #ff2d55;
+            --primary-hover: #e60044;
+            --text-color: #333;
+            --light-bg: #f0f0f0;
+            --white: #fff;
+            --shadow: 0 2px 5px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body { 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            line-height: 1.6;
+            margin: 0; 
+            padding: 20px; 
+            background-color: var(--light-bg);
+            color: var(--text-color);
+        }
+        
+        h1, h2, h3 {
+            color: var(--text-color);
+            margin-bottom: 1rem;
+        }
+        
+        .product-container { 
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Product Card Styles */
+        .product-card {
+            background: var(--white);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: var(--transition);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+        
+        .product-image-container {
+            position: relative;
+            padding-top: 100%; /* 1:1 Aspect Ratio */
+            overflow: hidden;
+        }
+        
+        .product-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+        
+        .product-info {
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .product-title {
+            font-size: 1.1rem;
+            margin: 0 0 8px 0;
+            min-height: 2.5rem;
+        }
+        
+        .product-desc {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+        
+        /* Button Styles */
+        .cta-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background: var(--primary-color);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 5px;
+            transition: var(--transition);
+            text-align: center;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .cta-button:hover {
+            background: var(--primary-hover);
+        }
+        
+        /* Grid Layout */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        /* Modal Styles */
+        .modal { 
+            display: none; 
+            position: fixed; 
+            z-index: 1000; 
+            left: 0; 
+            top: 0; 
+            width: 100%; 
+            height: 100%; 
+            background-color: rgba(0,0,0,0.9); 
+            justify-content: center; 
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal.active {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+        
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        
+        /* Audio Player */
+        .audio-player {
+            background: var(--white);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px auto;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .audio-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px 0;
+            border-top: 1px solid #ddd;
+        }
+        
+        /* Contact Info */
+        .contact-info {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+        
+        .contact-info a {
+            color: var(--primary-color);
+            word-break: break-all;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .audio-player {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="product-container">
+        <h1>歡迎來到我的 TikTok Shop 商店！</h1>
+        <p class="construction">基於保安問題，無法提供全部商品連結，請查看以下精選產品或加入 Telegram 群組！</p>
+
+        <!-- Audio Player -->
+        <div class="audio-player">
+            <audio id="backgroundMusic" src="music/background-music-笑看風雲.mp3" loop></audio>
+            <div class="audio-controls">
+                <button class="cta-button" onclick="playMusic()">播放音樂</button>     
+                <button class="cta-button" onclick="pauseMusic()">暫停音樂</button>
+            </div>
+            <div style="margin-top:10px;">
+                <span>音量: </span>
+                <input type="range" min="0" max="1" step="0.1" value="0.5" oninput="adjustVolume(this.value)">
+            </div>
+        </div>	
+
+        <!-- Product Grid -->
+        <div class="products-grid" id="producerContainer">
+            <!-- Dynamically loaded -->
+        </div>
+
+        <!-- Forklift Product -->
+        <div class="product-card">
+            <div class="product-image-container">
+                <img src="images/product-used-toyota-forklift-8FGCU25-2018-front.jpg" 
+                     alt="2018 Toyota 二手插車 (正面)" 
+                     class="product-image" 
+                     loading="lazy"
+                     onclick="openModal('images/product-used-toyota-forklift-8FGCU25-2018-front.jpg')">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">二手插車待售 - Toyota 8FGCU25</h3>
+                <p class="product-desc">年份：2018 | 狀況：良好 | 價格：RM 15,000</p>
+                <a href="https://wa.me/60196819069" class="cta-button">WhatsApp 詢問</a>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div id="imageModal" class="modal">
+            <span class="close" onclick="closeModal()">×</span>
+            <img class="modal-content" id="modalImage" loading="lazy">
+        </div>
+
+        <!-- Government Contact Info -->
+        <div class="contact-info">
+            <h3>相關政府部門與公用事業聯繫方式</h3>
+            <p><strong>政府部門：</strong></p>
+            <p>LHDN (稅務局): <a href="tel:+60389111000">03-8911 1000</a> (本地) / <a href="tel:+60389111000">603-8911 1000</a> (海外), 特別援助: <a href="tel:+1800882747">1800-88-2747</a>, 電子郵件: <a href="mailto:helpdesk@hasil.gov.my">helpdesk@hasil.gov.my</a></p>
+            <!-- Other contact info... -->
+            <p class="note">以上資訊僅供參考，請自行確認最新聯繫方式！</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 我的 TikTok Shop | <a href="https://t.me/+kGgttt3VJH4zZTRl">欲知更多消息請參加我的 Telegram Group</a></p>
+    </footer>
+
+    <script>
+        // ===== Music Player =====
+        const audio = document.getElementById("backgroundMusic");
+        let isAudioReady = false;
+
+        audio.addEventListener('canplay', () => {
+            isAudioReady = true;
+            audio.volume = 0.5;
+        });
+
+        function playMusic() {
+            if (!isAudioReady) {
+                alert("請先點擊頁面任意處，再播放音樂");
+                return;
+            }
+            audio.play().catch(e => {
+                alert("請先點擊頁面任意處激活音頻");
+            });
+        }
+
+        function pauseMusic() {
+            audio.pause();
+        }
+
+        function adjustVolume(value) {
+            audio.volume = value;
+        }
+
+        // Enable audio after any click
+        document.addEventListener('click', () => {
+            isAudioReady = true;
+        }, { once: true });
+
+        // ===== Producer Data =====
+        const producers = [
+            {
+                name: "HUAWEI MALAYSIA",
+                products: [
+                    { 
+                        name: "HUAWEI FreeBuds SE 3", 
+                        desc: "42小時續航 | 輕巧舒適 | 快速充電",  
+                        image: "images/huawei-freebuds-se3-ZShuuEBQ4.jpg",
+                        link: "https://vt.tiktok.com/ZShuuEBQ4/" 
+                    },
+                    { 
+                        name: "HUAWEI Watch GT 4", 
+                        desc: "兩週續航 | 100+運動模式 | 精準健康監測",  
+                        image: "images/huawei-watch-gt4.jpg",
+                        link: "https://vt.tiktok.com/ZShuuABC1/" 
+                    },
+                    { 
+                        name: "HUAWEI MatePad 11", 
+                        desc: "120Hz高刷屏 | 鴻蒙OS | 多屏協同",  
+                        image: "images/huawei-matepad-11.jpg",
+                        link: "#" 
+                    },
+                    { 
+                        name: "HUAWEI Band 8", 
+                        desc: "超長續航 | 血氧監測 | 96種運動模式",  
+                        image: "images/huawei-band-8.jpg",
+                        link: "#" 
+                    }
+                ]
+            },
+            {
+                name: "更多高品質產品即將上架，敬請期待!",
+                products: []
+            }
+        ];
+
+        function renderProducers() {
+            const container = document.getElementById('producerContainer');
+            
+            producers.forEach(producer => {
+                if (producer.products.length === 0) return;
+                
+                let productsHTML = '';
+                producer.products.forEach(product => {
+                    productsHTML += `
+                        <div class="product-card">
+                            <div class="product-image-container">
+                                <img src="${product.image}" alt="${product.name}" class="product-image" loading="lazy">
+                            </div>
+                            <div class="product-info">
+                                <h3 class="product-title">${product.name}</h3>
+                                <p class="product-desc">${product.desc}</p>
+                                <a href="${product.link}" class="cta-button" target="_blank">
+                                    點擊了解更多
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                container.innerHTML += productsHTML;
+            });
+        }
+
+        // ===== Modal Functions =====
+        function openModal(imageSrc) {
+            const modal = document.getElementById("imageModal");
+            const modalImg = document.getElementById("modalImage");
+            modalImg.src = imageSrc;
+            modal.classList.add("active");
+            document.body.style.overflow = "hidden";
+        }
+
+        function closeModal() {
+            const modal = document.getElementById("imageModal");
+            modal.classList.remove("active");
+            document.body.style.overflow = "auto";
+        }
+
+        // Close modal when clicking outside image
+        document.getElementById("imageModal").addEventListener("click", function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProducers();
+            
+            // Preload images
+            const images = document.querySelectorAll('img[loading="lazy"]');
+            images.forEach(img => {
+                img.loading = "eager";
+            });
+        });
+    </script>
+</body>
+</html>
