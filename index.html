@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="我的 TikTok Shop 推廣商店，展示優質產品與創作者內容！">
+    <meta name="keywords" content="TikTok Shop, 產品推薦, affiliate, 創作者, forklift">
+    <title>我的 TikTok Shop 推廣商店</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            text-align: center; 
+            margin: 0; 
+            padding: 20px; 
+            background-color: #f0f0f0; 
+        }
+        h1 { color: #333; }
+        .product { 
+            margin: 20px; 
+            padding: 20px; 
+            background: white; 
+            border-radius: 10px; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .image-gallery { 
+            display: flex; 
+            gap: 10px; 
+            margin: 10px 0; 
+            justify-content: center; 
+        }
+        .image-gallery img { 
+            max-width: 30%; 
+            height: auto; 
+            transition: opacity 0.3s ease; 
+        }
+        .image-gallery img:hover { 
+            opacity: 0.8; 
+            cursor: pointer; 
+        }
+        .modal { 
+            display: none; 
+            position: fixed; 
+            z-index: 1000; 
+            left: 0; 
+            top: 0; 
+            width: 100%; 
+            height: 100%; 
+            background-color: rgba(0,0,0,0.8); 
+            justify-content: center; 
+            align-items: center; 
+        }
+        .modal-content { 
+            max-width: 90%; 
+            max-height: 90%; 
+        }
+        .close { 
+            position: absolute; 
+            top: 15px; 
+            right: 35px; 
+            color: white; 
+            font-size: 40px; 
+            cursor: pointer; 
+        }
+        .cta-button { 
+            display: inline-block; 
+            padding: 10px 20px; 
+            background: #ff2d55; 
+            color: white; 
+            text-decoration: none; 
+            border-radius: 5px; 
+            transition: background 0.3s; 
+        }
+        .cta-button:hover { 
+            background: #e60044; 
+        }
+        .construction { 
+            color: #666; 
+            font-style: italic; 
+        }
+        /* New Producer Styles */
+        .producer-groups {
+            display: grid;
+            gap: 30px;
+            margin: 40px 0;
+        }
+        .producer {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .product-card {
+            border: 1px solid #eee;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        /* Audio Player */
+        #audioControls {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px auto;
+            max-width: 400px;
+        }
+        @media (max-width: 600px) {
+            .image-gallery img { max-width: 45%; }
+            .products { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <h1>歡迎來到我的 TikTok Shop 商店！</h1>
+    <p class="construction">基於保安問題，無法提供全部商品連結，請查看以下精選產品或加入 Telegram 群組！</p>
+
+    <!-- ==================== Music Player ==================== -->
+    <div id="audioControls" style="text-align: center; margin: 20px 0;">
+        <audio id="backgroundMusic" src="music/background-music-笑看風雲.mp3" loop></audio>
+        <button onclick="playMusic()">播放音樂</button>     
+        <button onclick="pauseMusic()">暫停音樂</button>
+		<div style="margin-top:10px;">
+		    <span>Volume: </span>
+			<input type="range" min="0" max="1" step="0.1" value="0.5"
+			       oninput="adjustVolume(this.value)">
+        </div>
+	</div>	
+
+    <!-- ==================== Producer Groups ==================== -->
+    <div class="producer-groups" id="producerContainer">
+        <!-- Dynamically loaded -->
+    </div>
+
+    <!-- ==================== Existing Content ==================== -->
+    <div class="product">
+        <h2>二手插車待售 - Toyota 8FGCU25</h2>
+        <div class="image-gallery">
+            <img src="images/product-used-toyota-forklift-8FGCU25-2018-front.jpg" alt="2018 Toyota 二手插車 (正面)" loading="lazy" onclick="openModal('images/product-used-toyota-forklift-2018.jpg')" style="cursor: pointer;">
+            <img src="images/product-used-toyota-forklift-8FGCU25-2018-side.jpg" alt="2018 Toyota 二手插車 (側面)" loading="lazy" onclick="openModal('images/product-used-toyota-forklift-2018-side.jpg')" style="cursor: pointer;">
+            <img src="images/product-used-toyota-forklift-8FGCU25-2018-rear.jpg" alt="2018 Toyota 二手插車 (後面)" loading="lazy" onclick="openModal('images/product-used-toyota-forklift-2018-rear.jpg')" style="cursor: pointer;">
+        </div>
+        <p>年份：2018 | 狀況：良好 | 價格：RM 15,000</p>
+        <a href="https://wa.me/60196819069" class="cta-button">WhatsApp 詢問</a>
+    </div>
+
+    <!-- Modal -->
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">×</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <script>
+        // ===== Music Player =====
+        const audio = document.getElementById("backgroundMusic");
+        let isAudioReady = false;
+
+        audio.addEventListener('canplay', () => {
+            isAudioReady = true;
+            audio.volume = 0.5;
+        });
+
+        function playMusic() {
+            if (!isAudioReady) {
+                alert("請先點擊頁面任意處，再播放音樂");
+                return;
+            }
+            audio.play().catch(e => {
+                alert("請先點擊頁面任意處激活音頻");
+            });
+        }
+
+        function pauseMusic() {
+            audio.pause();
+        }
+
+        function adjustVolume(value) {
+            audio.volume = value;
+        }
+
+        // Enable audio after any click
+        document.addEventListener('click', () => {
+            isAudioReady = true;
+        }, { once: true });
+
+// ===== Producer Data =====
+const producers = [
+    {
+        name: "HUAWEI MALAYSIA",
+        products: [
+            { 
+                name: "HUAWEI FreeBuds SE 3 Earphone", 
+                desc: "42H of Music Playback | Lightweight and Compact | Fast Charging",  
+                link: "https://vt.tiktok.com/ZShuuEBQ4/" 
+            },
+            {
+                name: "-----------",
+                desc: "---------",
+                link: "---------"
+            },
+            {
+                name: "-----------",
+                desc: "---------",
+                link: "---------"
+            },
+            {
+                name: "-----------",
+                desc: "---------",
+                link: "---------"
+            }
+            // Add 8 more products per producer
+        ]
+    },
+    {
+        name: "更多高素質產品将很快上架， 敬請期待 !",
+        products: [
+            {
+                name: "-----------",
+                desc: "---------",
+                link: "---------"
+            }
+            // Add 9 more products
+        ]
+    }
+    // Add more producers
+];
+
+function renderProducers() {
+    const container = document.getElementById('producerContainer');
+    
+    producers.forEach(producer => {
+        let productsHTML = '';
+        producer.products.forEach(product => {
+            productsHTML += `
+                <div class="product-card">
+                    <h4>${product.name}</h4>
+                    <p>${product.desc}</p>
+                    <a href="${product.link}" class="cta-button">
+                        点击了解更多
+                    </a>
+                </div>
+            `;
+        });
+
+        container.innerHTML += `
+            <div class="producer">
+                <div class="products">${productsHTML}</div>
+            </div>
+        `;
+    });
+}
+
+        // ===== Existing Functions =====
+        function openModal(imageSrc) {
+            document.getElementById("imageModal").style.display = "flex";
+            document.getElementById("modalImage").src = imageSrc;
+        }
+        function closeModal() {
+            document.getElementById("imageModal").style.display = "none";
+        }
+
+        // Initialize
+        window.addEventListener('DOMContentLoaded', () => {
+            renderProducers();
+        });
+    </script>
+</body>
+
+    <footer>
+        <p>© 2025 我的 TikTok Shop | <a href="https://t.me/+kGgttt3VJH4zZTRl">欲知更多消息請參加我的 Telegram Group</a></p>
+    </footer>
+	
+    <!-- 政府部門與公用事業資訊 -->
+    <div id="contactInfo" style="text-align: center; margin: 20px 0; font-size: 14px;">
+        <h3>相關政府部門與公用事業聯繫方式</h3>
+        <p><strong>政府部門：</strong></p>
+        <p>LHDN (稅務局): <a href="tel:+60389111000">03-8911 1000</a> (本地) / <a href="tel:+60389111000">603-8911 1000</a> (海外), 特別援助: <a href="tel:+1800882747">1800-88-2747</a>, 電子郵件: <a href="mailto:helpdesk@hasil.gov.my">helpdesk@hasil.gov.my</a></p>
+        <p>MCMC (通訊與多媒體委員會): <a href="tel:+1800888030">1-800-888-030</a>, 網站: <a href="https://www.mcmc.gov.my" target="_blank">www.mcmc.gov.my</a></p>
+        <p>997 熱線 (舉報詐骗): <a href="tel:997">997</a></p>
+        <p><strong>公用事業與稅務：</strong></p>
+        <p>TM (電訊): <a href="tel:100">100</a>, 網站: <a href="https://www.tm.com.my" target="_blank">www.tm.com.my</a></p>
+        <p>Maxis: <a href="tel:123">123</a>, 網站: <a href="https://www.maxis.com.my" target="_blank">www.maxis.com.my</a></p>
+        <p>Digi: <a href="tel:+60162211800">016-221 1800</a>, 網站: <a href="https://www.digi.com.my" target="_blank">www.digi.com.my</a></p>
+        <p>SAMB (雪蘭莪州水務): <a href="tel:15300">15300</a>, 網站: <a href="https://www.syabas.com.my" target="_blank">www.syabas.com.my</a></p>
+        <p>TNB (國家電力): 故障申報: <a href="tel:15454">15454</a>, 客戶服務: <a href="tel:+60389253888">03-8925 3888</a>, 網站: <a href="https://www.tnb.com.my" target="_blank">www.tnb.com.my</a></p>
+        <p>IWK (產業用水): <a href="tel:+1800884995">1800-88-4995</a>, 網站: <a href="https://www.iwk.com.my" target="_blank">www.iwk.com.my</a></p>
+        <p>門牌稅: 聯繫當地市政廳 (例如 MBSA: <a href="tel:+60355105711">03-5510 5711</a>)</p>
+        <p>地稅: 聯繫當地地政局 (例如雪蘭莪州土地局: <a href="tel:+60355447000">03-5544 7000</a>)</p>
+        <p class="note">以上資訊僅供參考，請自行確認最新聯繫方式！</p>
+    </div>
+</html>
